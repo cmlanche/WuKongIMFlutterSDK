@@ -359,7 +359,7 @@ class WKConnectionManager {
       Future<List<ConnectivityResult>> connectivityResult =
           (Connectivity().checkConnectivity());
       connectivityResult.then((value) {
-        if (_hasNetWork(value)) {
+        if (!_hasNetWork(value)) {
           isReconnection = true;
           Logs.debug('网络断开了');
           _checkSedingMsg();
