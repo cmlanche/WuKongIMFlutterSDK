@@ -47,7 +47,7 @@ dependencies:
   encryptor: ^0.0.1
   shared_preferences: ^2.2.0
   sqflite: ^2.3.0
-  connectivity: ^3.0.6
+  connectivity_plus: ^6.1.0
 
 dev_dependencies:
   flutter_test:

@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wukongimfluttersdk/db/const.dart';
@@ -356,10 +356,10 @@ class WKConnectionManager {
   _startCheckNetworkTimer() {
     _stopCheckNetworkTimer();
     checkNetworkTimer = Timer.periodic(checkNetworkSecond, (timer) {
-      Future<ConnectivityResult> connectivityResult =
+      Future<List<ConnectivityResult>> connectivityResult =
           (Connectivity().checkConnectivity());
       connectivityResult.then((value) {
-        if (value == ConnectivityResult.none) {
+        if (_hasNetWork(value)) {
           isReconnection = true;
           Logs.debug('网络断开了');
           _checkSedingMsg();
@@ -372,6 +372,15 @@ class WKConnectionManager {
         }
       });
     });
+  }
+
+  _hasNetWork(List<ConnectivityResult> connections) {
+    for (ConnectivityResult r in connections) {
+      if (r != ConnectivityResult.none) {
+        return true;
+      }
+    }
+    return false;
   }
 
   _stopCheckNetworkTimer() {
